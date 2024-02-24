@@ -1,8 +1,9 @@
 public class BirthdayParty {
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
     private static final int NUM_GUESTS = 5;
-
     private static boolean cupcakeOnPlate = true;
+
+    private static final long START_TIME = System.nanoTime();
 
     // This variable is used to indicate the guest that has picked by the Minotaur
     // to enter the labyrinth
@@ -74,6 +75,7 @@ public class BirthdayParty {
                         // If all guests have eaten, then announce it
                         if (numGuestsEaten == NUM_GUESTS) {
                             log("All guests have eaten.");
+                            System.out.println("Time taken: " + (System.nanoTime() - START_TIME) / 1000000 + "ms");
                             System.exit(0);
                         }
 

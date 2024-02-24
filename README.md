@@ -19,6 +19,20 @@ This project uses OpenJDK 18. You can download it [here](https://jdk.java.net/ar
 - Create `NUM_GUESTS` threads to represent the guests.
 - Guest 0 will be responsible to ask for another cake whenever it is found empty. Each other guest is to eat the cake the very first time they find it full, otherwise they are to leave it empty. When guest 0 asks for the `NUM_GUESTS` cake, they can safely assume that all guests have been in the labyrinth.
 
+### Correctness
+
+- Synchronization:
+
+  - The use of a global integer and thread-safe mechanisms ensures that only one guest interacts with the labyrinth at a time.
+  - Guest 0's role as the 'cake monitor' provides a clear condition for determining when all guests have visited.
+
+- Logic: The structured eating pattern (guest 0 replenishes, others eat once) guarantees that the logic of "all guests have visited" is met when guest 0 requests the final cake.
+
+### Efficiency
+
+- Minimal Blocking: Guests mostly proceed independently without being blocked, except for the inherent synchronization point of accessing the labyrinth.
+- The runtime complexity is non deterministic due to the nature of thread scheduling and the fact that the Minotaur's random pick of the next guest is not guaranteed to be fair.
+
 ## Minotaur's Crystal Vase
 
 ### Open Door:
@@ -44,3 +58,13 @@ This project uses OpenJDK 18. You can download it [here](https://jdk.java.net/ar
 - Guests are added to a queue when they arrive at the door.
 - The Minotaur will let the next guest in when the room is empty.
 - Guests will leave the queue when they see the vase, and notify the next guest in line if there is one.
+
+### Correctness
+
+- Order and Fairness: The queue intrinsically guarantees that guests will be able to view the vase in the order they arrive.
+- Synchronization: The queue, combined with signaling between guests, ensures only one guest is viewing the vase at a time.
+
+### Efficiency
+
+- Reduced Contention: The queue eliminates the chaotic checking of the open door policy.
+- Overhead: There's a slight overhead in managing the queue data structure itself.
