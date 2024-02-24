@@ -33,6 +33,18 @@ This project uses OpenJDK 18. You can download it [here](https://jdk.java.net/ar
 - Minimal Blocking: Guests mostly proceed independently without being blocked, except for the inherent synchronization point of accessing the labyrinth.
 - The runtime complexity is non deterministic due to the nature of thread scheduling and the fact that the Minotaur's random pick of the next guest is not guaranteed to be fair.
 
+### Experimental Evaluation
+
+| Number of Guests | Time (ms) |
+| :--------------: | :-------: |
+|        5         |    40     |
+|        10        |    130    |
+|        20        |    359    |
+|        50        |   1868    |
+|       100        |   8159    |
+
+The time increases exponentially as the number of guests increases.
+
 ## Minotaur's Crystal Vase
 
 ### Open Door:
@@ -68,3 +80,18 @@ This project uses OpenJDK 18. You can download it [here](https://jdk.java.net/ar
 
 - Reduced Contention: The queue eliminates the chaotic checking of the open door policy.
 - Overhead: There's a slight overhead in managing the queue data structure itself.
+
+### Experimental Evaluation
+
+| Number of Guests | Time (ms) |
+| :--------------: | :-------: |
+|        5         |    15     |
+|        10        |    16     |
+|        20        |    17     |
+|        50        |    17     |
+|       100        |    21     |
+|       200        |    24     |
+|       500        |    39     |
+|       1000       |    65     |
+
+The time remains relatively constant as the number of guests increases. This is due to the fact that the Minotaur only has to let one guest in at a time, and the queue is managed efficiently.

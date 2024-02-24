@@ -1,11 +1,11 @@
-import java.util.Iterator;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class CrystalVase {
-    private static final boolean DEBUG = true;
-    private static final int NUM_GUESTS = 5;
+    private static final boolean DEBUG = false;
+    private static final int NUM_GUESTS = 50;
     private static final ConcurrentLinkedQueue<Thread> queue = new ConcurrentLinkedQueue<>();
     private static int numNotifiedGuests = 0;
+    private static final long START_TIME = System.nanoTime();
 
     public static void main(String[] args) {
         // Create and start guest threads
@@ -26,6 +26,7 @@ public class CrystalVase {
 
         log("All guests have viewed the vase!");
         log("Number of guests notified: " + numNotifiedGuests);
+        System.out.println("Time taken: " + (System.nanoTime() - START_TIME) / 1000000 + "ms");
     }
 
     private static void log(String message) {
@@ -36,8 +37,8 @@ public class CrystalVase {
 
     static class Guest implements Runnable {
         private int backOffTime = 0;
-        private static final int INCREMENT_BACKOFF = 10;
-        private static final int MAX_BACKOFF_TIME = 100;
+        private static final int INCREMENT_BACKOFF = 5;
+        private static final int MAX_BACKOFF_TIME = 50;
 
         /*
          * Guests join the queue to view the vase
@@ -86,7 +87,7 @@ public class CrystalVase {
 
         // Simulate viewing the vase
         private void enterShowroom() {
-            System.out.println(Thread.currentThread().getName() + " is viewing the vase...");
+            log(Thread.currentThread().getName() + " is viewing the vase...");
         }
 
         @Override
